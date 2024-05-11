@@ -3,6 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Badge from '@mui/material/Badge';
 import { mobile } from '../responsive'
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   height: 60px;
@@ -70,15 +71,17 @@ const Navbar = () => {
             <Search style={{ color: 'grey', fontSize: 16 }} />
           </SearchContainer>
         </Left>
-        <Center><Logo>LAMA.</Logo></Center>
+        <Center><Link to={'/'} style={{ color: 'inherit', textDecoration: 'none' }}><Logo>SHOP.</Logo></Link></Center>
         <Right>
-          <MenuItem>REGISTER</MenuItem>
-          <MenuItem>SIGN IN</MenuItem>
-          <MenuItem>
-            <Badge color="primary" badgeContent={99}>
-              <ShoppingCartOutlined />
-            </Badge>
-          </MenuItem>
+          <Link to={'/register'} style={{ color: 'inherit', textDecoration: 'none' }}><MenuItem>REGISTER</MenuItem></Link>
+          <Link to={'/login'} style={{ color: 'inherit', textDecoration: 'none' }}><MenuItem>SIGN IN</MenuItem></Link>
+          <Link to={'/cart'} style={{ color: 'inherit', textDecoration: 'none' }}>
+            <MenuItem>
+              <Badge color="primary" badgeContent={99}>
+                <ShoppingCartOutlined />
+              </Badge>
+            </MenuItem>
+          </Link>
         </Right>
       </Wrapper>
     </Container>

@@ -37,6 +37,7 @@ export const responseMessages = {
     REQUEST_SUCCESS:
         'Your Invitation is sent, wait for the admin approval',
     DUPLICATE_ERROR: 'same data exist in db',
+    NOTALLOWED: 'You are not allowed to do that !'
 }
 
 
