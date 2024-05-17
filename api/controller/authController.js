@@ -3,9 +3,12 @@ import { responseMessages } from '../constants/responseMessages.js'
 import bcrypt, { compareSync } from "bcrypt"
 import { ALREADYEXISTS, CREATED, FORBIDDEN, INTERNALERROR, NOTFOUND, OK } from '../constants/httpStatus.js'
 import { GenerateToken } from '../utils/token.js'
-//: /api/auth/register
-//: POST
-//: Public
+
+
+//API: /api/auth/register
+//REquest : POST
+//Access: Public
+
 export const register = async (req, res) => {
     try {
         const { username, email, password } = req.body
@@ -56,9 +59,9 @@ export const register = async (req, res) => {
     }
 }
 
-//: /api/auth/login
-//: POST
-//: Public
+//API: /api/auth/login
+//Request: POST
+//Access: Public
 export const login = async (req, res) => {
     try {
         const { username, password } = req.body;

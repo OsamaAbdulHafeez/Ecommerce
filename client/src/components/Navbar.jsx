@@ -1,9 +1,10 @@
 import { Padding, Search, ShoppingCartOutlined } from '@mui/icons-material'
-import React from 'react'
+import React, { memo } from 'react'
 import styled from 'styled-components'
 import Badge from '@mui/material/Badge';
 import { mobile } from '../responsive'
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const Container = styled.div`
   height: 60px;
@@ -61,6 +62,10 @@ const MenuItem = styled.div`
 `
 
 const Navbar = () => {
+
+  const quantity = useSelector(state=>state.cart.quantity)
+
+  console.log(quantity)
   return (
     <Container>
       <Wrapper>
@@ -77,7 +82,7 @@ const Navbar = () => {
           <Link to={'/login'} style={{ color: 'inherit', textDecoration: 'none' }}><MenuItem>SIGN IN</MenuItem></Link>
           <Link to={'/cart'} style={{ color: 'inherit', textDecoration: 'none' }}>
             <MenuItem>
-              <Badge color="primary" badgeContent={99}>
+              <Badge color="primary" badgeContent={quantity}>
                 <ShoppingCartOutlined />
               </Badge>
             </MenuItem>
@@ -88,4 +93,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default memo(Navbar)

@@ -2,6 +2,10 @@ import { ALREADYEXISTS, FORBIDDEN, OK } from '../constants/httpStatus.js'
 import { responseMessages } from '../constants/responseMessages.js'
 import UserSchema from '../models/User.js'
 
+//API: /api/user/:id
+//Request: PUT
+//Access: Private
+// UPDATE USER
 
 export const updateUser = async (req, res) => {
     try {
@@ -35,6 +39,12 @@ export const updateUser = async (req, res) => {
         })
     }
 }
+
+//API: /api/user/:id
+//Request: DELETE
+//Access: Private
+// DELETE USER
+
 export const deleteUser = async (req, res) => {
     try {
         await UserSchema.findByIdAndDelete(req.params.id)
@@ -48,6 +58,12 @@ export const deleteUser = async (req, res) => {
         })
     }
 }
+
+//API: /api/user/find/:id
+//Request: GET
+//Access: Admin
+// GET USER
+
 export const getUser = async (req, res) => {
     try {
         const user = await UserSchema.findById(req.params.id)
@@ -64,6 +80,11 @@ export const getUser = async (req, res) => {
         })
     }
 }
+
+//API: /api/user/
+//Request: GET
+//Access: Admin
+// GET ALL USER
 
 export const getAllUser = async (req, res) => {
     try {
@@ -82,11 +103,15 @@ export const getAllUser = async (req, res) => {
     }
 }
 
-// GET USER STAT
+//API: /api/user/stat
+//Request: GET
+//Access: Admin
+// GET STAT
 
 export const userStat = async (req, res) => {
     const date = new Date()
     const lastYear = new Date(date.setFullYear(date.getFullYear() - 1))
+    console.log(lastYear)
     try {
         const data = await UserSchema.aggregate([
             { $match: { createdAt: { $gte: lastYear } } },

@@ -5,19 +5,26 @@ import NewsLetter from "../components/NewsLetter"
 import Annoucement from "../components/Annoucement"
 import { Add, Remove } from "@mui/icons-material"
 import { mobile } from "../responsive"
+import { useLocation, useNavigate } from "react-router-dom"
+import { memo, useEffect, useMemo, useState } from "react"
+import axios from "axios"
+import { publicRequest } from "../requestMethod"
+import loader from '../assets/ZKZg.gif'
+import { addProduct } from "../redux/cartRedux"
+import { useDispatch } from "react-redux"
 
 const Container = styled.div``
 const Wrapper = styled.div`
     padding: 50px;
     display: flex;
-    ${mobile({ padding: "10px",flexDirection:'column' })}
+    ${mobile({ padding: "10px", flexDirection: 'column' })}
 `
 const ImgContainer = styled.div`
     flex: 1;
 `
 const Image = styled.img`
-    width: 100%;
-    height: 90vh;
+    width: 80%;
+    height: 80vh;
     object-fit: cover;
     ${mobile({ height: "40vh" })}
 `
@@ -96,50 +103,79 @@ const Button = styled.button`
         background-color: #f8f4f4;
     }
 `
-const Product = () => {
+const Product = memo(() => {
+    const location = useLocation()
+    const id = location.pathname.split('/')[2]
+    const [product, setProduct] = useState({})
+    const [quantity, setQuantity] = useState(1)
+    const [color, setColor] = useState()
+    const [size, setSize] = useState()
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    useEffect(() => {
+        const getProduct = async () => {
+            try {
+                const res = await publicRequest.get(`/product/find/${id}`)
+                console.log("API Hit Hui")
+                setProduct(res.data.data)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        getProduct()
+    }, [id])
+
+    const handleQuantity = (type) => {
+        if (type === "inc") {
+            setQuantity(quantity + 1)
+        } else {
+            quantity > 1 && setQuantity(quantity - 1)
+        }
+    }
+
+    const addCartHandler = () => {
+        dispatch(addProduct({ ...product, quantity, color, size }))
+        navigate('/cart')
+
+    }
     return (
         <Container>
             <Navbar />
             <Annoucement />
             <Wrapper>
                 <ImgContainer>
-                    <Image src="https://i.ibb.co/S6qMxwr/jean.jpg" />
+                    <Image src={product.img} />
                 </ImgContainer>
                 <InfoContainer>
-                    <Title>Denim Jumpsuit</Title>
+                    <Title>{product.title}</Title>
                     <Desc>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-                        venenatis, dolor in finibus malesuada, lectus ipsum porta nunc, at
-                        iaculis arcu nisi sed mauris. Nulla fermentum vestibulum ex, eget
-                        tristique tortor pretium ut. Curabitur elit justo, consequat id
-                        condimentum ac, volutpat ornare.
+                        {product.desc}
                     </Desc>
-                    <Price>$ 20</Price>
+                    <Price>Rs:{product.price}</Price>
                     <FilterContainer>
                         <Filter>
                             <FilterTitle>Color</FilterTitle>
-                            <FilterColor color="black" />
-                            <FilterColor color="darkblue" />
-                            <FilterColor color="gray" />
+                            {product.color?.map((color) => (
+                                <FilterColor key={color} color={color} style={{ border: '1px solid #000' }}
+                                    onClick={() => setColor(color)} />
+                            ))}
                         </Filter>
                         <Filter>
                             <FilterTitle>Size</FilterTitle>
-                            <FilterSize>
-                                <FilterSizeOption>XS</FilterSizeOption>
-                                <FilterSizeOption>S</FilterSizeOption>
-                                <FilterSizeOption>M</FilterSizeOption>
-                                <FilterSizeOption>L</FilterSizeOption>
-                                <FilterSizeOption>XL</FilterSizeOption>
+                            <FilterSize onChange={(e) => setSize(e.target.value)}>
+                                {product.size?.map((size) => (
+                                    <FilterSizeOption>{size}</FilterSizeOption>
+                                ))}
                             </FilterSize>
                         </Filter>
                     </FilterContainer>
                     <AddContainer>
                         <AmountContainer>
-                            <Remove />
-                            <Amount>1</Amount>
-                            <Add />
+                            <Remove onClick={() => handleQuantity("dec")} />
+                            <Amount>{quantity}</Amount>
+                            <Add onClick={() => handleQuantity("inc")} />
                         </AmountContainer>
-                        <Button>ADD TO CART</Button>
+                        <Button onClick={addCartHandler}>ADD TO CART</Button>
                     </AddContainer>
                 </InfoContainer>
             </Wrapper>
@@ -147,6 +183,6 @@ const Product = () => {
             <Footer />
         </Container>
     )
-}
+})
 
 export default Product

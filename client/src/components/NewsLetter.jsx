@@ -1,6 +1,7 @@
 import { Send } from "@mui/icons-material"
 import styled from "styled-components"
 import { mobile } from "../responsive"
+import { memo } from "react"
 
 const Container = styled.div`
     height: 60vh;
@@ -56,4 +57,4 @@ const NewsLetter = () => {
   )
 }
 
-export default NewsLetter
+export default memo(NewsLetter)

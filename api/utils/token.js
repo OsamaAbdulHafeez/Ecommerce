@@ -14,7 +14,7 @@ export const GenerateToken = ({ data, expiresIn }) => {
 
 export const VerifyToken = (req, res, next) => {
     const token1 = req.headers.token;
-    const token = token1.split(" ")[1]
+    const token = token1 && token1.split(" ")[1]
     if (!token1) {
         return res.status(NOTALLOWED).send({
             status: false,

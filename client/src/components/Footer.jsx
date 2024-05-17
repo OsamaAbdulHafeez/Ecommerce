@@ -1,6 +1,7 @@
 import { Facebook, Instagram, MailOutline, Phone, Pinterest, Room, Twitter } from "@mui/icons-material"
 import styled from "styled-components"
 import { mobile } from "../responsive"
+import { memo } from "react"
 
 const Container = styled.div`
     display: flex;
@@ -116,4 +117,4 @@ const Footer = () => {
     )
 }
 
-export default Footer
+export default memo(Footer)
