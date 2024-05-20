@@ -4,7 +4,8 @@ import styled from 'styled-components'
 import Badge from '@mui/material/Badge';
 import { mobile } from '../responsive'
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../redux/userRedux';
 
 const Container = styled.div`
   height: 60px;
@@ -63,8 +64,11 @@ const MenuItem = styled.div`
 
 const Navbar = () => {
 
-  const quantity = useSelector(state=>state.cart.quantity)
-
+  const quantity = useSelector(state => state.cart.quantity)
+  const dispatch = useDispatch()
+  const logoutHnadler = () => {
+    dispatch(logout())
+  }
   console.log(quantity)
   return (
     <Container>
@@ -78,8 +82,6 @@ const Navbar = () => {
         </Left>
         <Center><Link to={'/'} style={{ color: 'inherit', textDecoration: 'none' }}><Logo>SHOP.</Logo></Link></Center>
         <Right>
-          <Link to={'/register'} style={{ color: 'inherit', textDecoration: 'none' }}><MenuItem>REGISTER</MenuItem></Link>
-          <Link to={'/login'} style={{ color: 'inherit', textDecoration: 'none' }}><MenuItem>SIGN IN</MenuItem></Link>
           <Link to={'/cart'} style={{ color: 'inherit', textDecoration: 'none' }}>
             <MenuItem>
               <Badge color="primary" badgeContent={quantity}>
@@ -87,6 +89,7 @@ const Navbar = () => {
               </Badge>
             </MenuItem>
           </Link>
+          <Link to={'/login'} style={{ color: 'inherit', textDecoration: 'none', fontWeight: '600' }} onClick={logoutHnadler}><MenuItem>LOGOUT</MenuItem></Link>
         </Right>
       </Wrapper>
     </Container>

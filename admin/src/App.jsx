@@ -5,7 +5,8 @@ import Home from "./pages/home/Home";
 import {
   BrowserRouter as Router,
   Route,
-  Routes
+  Routes,
+  useLocation
 } from 'react-router-dom';
 import UserList from "./pages/userList/UserList";
 import User from "./pages/user/User";
@@ -13,25 +14,34 @@ import NewUser from "./pages/newUser/NewUser";
 import ProductList from "./pages/productList/ProductList";
 import Product from "./pages/product/Product";
 import NewProduct from "./pages/newProduct/NewProduct";
+import Login from "./pages/login/Login";
 
 function App() {
+  const location = useLocation();
+  const isLoginPage = location.pathname === '/login';
+  const admin = JSON.parse(JSON.parse(localStorage.getItem('persist:root')).user).currentUser.data.isAdmin
+  console.log(admin)
   return (
-    <Router>
-      <Topbar />
-      <div className="container">
-        <Sidebar />
-        <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="/users" element={<UserList />} />
-          <Route exact path="/user/:userId" element={<User />} />
-          <Route exact path="/newUser" element={<NewUser />} />
-          <Route exact path="/products" element={<ProductList />} />
-          <Route exact path="/product/:productId" element={<Product />} />
-          <Route exact path="/newproduct" element={<NewProduct />} />
-        </Routes>
-      </div>
-    </Router>
-  );
+    <div>
+      {admin && (<>
+        {!isLoginPage && <Topbar />}
+        <div className="container">
+          {!isLoginPage && <Sidebar />}
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/users" element={<UserList />} />
+            <Route path="/user/:userId" element={<User />} />
+            <Route path="/newUser" element={<NewUser />} />
+            <Route path="/products" element={<ProductList />} />
+            <Route path="/product/:productId" element={<Product />} />
+            <Route path="/newproduct" element={<NewProduct />} />
+          </Routes>
+        </div>
+      </>)}
+      <Routes>
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </div>);
 }
 
 export default App;

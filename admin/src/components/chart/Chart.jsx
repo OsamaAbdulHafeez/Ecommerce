@@ -1,3 +1,5 @@
+import { useEffect, useMemo, useState } from "react";
+import { userRequest } from '../../requestMethods'
 import "./chart.css";
 import {
   LineChart,
@@ -9,7 +11,6 @@ import {
 } from "recharts";
 
 export default function Chart({ title, data, dataKey, grid }) {
-
   return (
     <div className="chart">
       <h3 className="chartTitle">{title}</h3>

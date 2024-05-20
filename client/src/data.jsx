@@ -4,6 +4,7 @@ import Three from './assets/3.png'
 import TShirt from './assets/T-Shirts.png'
 import froks from './assets/froks.png'
 import jacket from './assets/jacket.png'
+import jackets from './assets/jackets.png'
 export const sliderItems = [
     {
         id:1,
@@ -37,13 +38,13 @@ export const Category = [
     },
     {
         id:2,
-        image:"https://images.pexels.com/photos/2983464/pexels-photo-2983464.jpeg?auto=compress&cs=tinysrgb&w=600",
+        image:jackets,
         title:"LOUNGEWEAR LOVE",
         cat:'coat'
     },
     {
         id:3,
-        image:"https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&w=600",
+        image:"https://static-01.daraz.pk/p/8e3bbae4d078d5ad23d74626cafc15e5.png_300x0q75.webp",
         title:"LIGHT JACKETS !",
         cat:'jeans'
 

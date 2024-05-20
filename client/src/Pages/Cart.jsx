@@ -4,14 +4,14 @@ import Annoucement from '../components/Annoucement'
 import Footer from '../components/Footer'
 import { Add, Remove } from '@mui/icons-material'
 import { mobile } from '../responsive'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import StripeCheckout from 'react-stripe-checkout';
 import { useEffect, useState } from 'react'
 import { userRequest } from '../requestMethod'
 import { useNavigate } from 'react-router-dom'
+import { sucessOrder } from '../redux/cartRedux'
 
 const KEY = import.meta.env.VITE_STRIPE
-console.log(KEY)
 const Container = styled.div``
 const Wrapper = styled.div`
     padding: 20px;
@@ -139,6 +139,7 @@ const Cart = () => {
     // const KEY = process.env.REACT_APP_STRIPE;
     // console.log(KEY)
     const cart = useSelector(state => state.cart)
+    const dispatch = useDispatch()
     const [stripeToken, setStripeToken] = useState('')
     const navigate = useNavigate()
     const onToken = (token) => {
@@ -152,13 +153,18 @@ const Cart = () => {
                     tokenId: stripeToken.id,
                     amount: cart.total * 100
                 })
-                navigate('/Success', { state: { data: res.data.data }})
+                navigate('/Success', { state: { data: res.data.data } })
+                dispatch(sucessOrder())
             } catch (error) {
                 console.log(error)
             }
         }
         stripeToken && makeRequest()
     }, [stripeToken, cart.total, navigate])
+
+    const checkHanlder = () => {
+        console.log("hello")
+    }
     return (
         <Container>
             <Navbar />
@@ -228,7 +234,7 @@ const Cart = () => {
                             token={onToken}
                             stripeKey={KEY}
                         >
-                            <Button>CHECKOUT NOW</Button>
+                            <Button onClick={checkHanlder}>CHECKOUT NOW</Button>
                         </StripeCheckout>
 
                     </Summary>

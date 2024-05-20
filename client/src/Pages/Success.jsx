@@ -1,7 +1,11 @@
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 
 const Success = () => {
     const location = useLocation()
+    const naviagte = useNavigate()
+    const suceessHandler = () =>{
+        naviagte('/')
+    }
     console.log(location)
     return (
         <div style={{
@@ -19,7 +23,7 @@ const Success = () => {
                     color: 'white',
                     fontWeight: '600',
                     cursor: 'pointer'
-                }}>
+                }} onClick={suceessHandler}>
                     Success
                 </button>
         </div>

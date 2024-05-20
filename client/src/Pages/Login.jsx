@@ -3,6 +3,7 @@ import { mobile } from '../responsive'
 import { useRef } from "react"
 import { login } from "../redux/apiCalls"
 import { useDispatch, useSelector } from "react-redux"
+import { Link } from "react-router-dom"
 
 const Container = styled.div`
     width: 100vw;
@@ -49,7 +50,7 @@ const Button = styled.button`
         cursor: not-allowed;
     }
 `
-const Link = styled.a`
+const Links = styled.a`
     margin: 5px 0;
     font-size: 12px;
     text-decoration: underline;
@@ -70,8 +71,6 @@ const Login = () => {
             password: password.current.value
         }
         login(dispatch, obj)
-        console.log(email.current.value)
-        console.log(password.current.value)
     }
     return (
         <Container>
@@ -83,8 +82,8 @@ const Login = () => {
 
                     <Button type="submit" disabled={isFetching}>LOGIN</Button>
                     {error && <Error>Some thing went wrong...</Error>}
-                    <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
-                    <Link>CREATE A NEW ACCOUNT</Link>
+                    <Links>DO NOT YOU REMEMBER THE PASSWORD?</Links>
+                    <Link to='/register' style={{color:'inherit'}}><Links>CREATE A NEW ACCOUNT</Links></Link>
                 </Form>
             </Wrapper>
         </Container>

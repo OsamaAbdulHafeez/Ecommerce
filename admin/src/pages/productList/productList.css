@@ -1,3 +1,22 @@
+.productListContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.addNew{
+    width: fit-content;
+    margin-left: auto;
+    padding: 10px;
+    background-color: #3bb077;
+    border: none;
+    
+    border-radius: 5px;
+}
+.addNew button{
+    background: none;
+    border: none;
+    color: white;
+}
 .productList{
     flex: 4;
 }
